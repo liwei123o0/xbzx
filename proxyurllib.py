@@ -46,7 +46,7 @@ def download_page(url, proxy = None, referer = None):
         method.add_header('User-Agent', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36')
         method.add_header('Accept-Language', 'en-US,en;q=0.5')
 
-        result   =  opener.open(method, timeout=5)
+        result   =  opener.open(method, timeout=10)
         page_buf =  result.read()
     except Exception, reason:
         print 'download failed: ', reason
@@ -55,6 +55,7 @@ def download_page(url, proxy = None, referer = None):
 def main(proxy):
     url = "https://www.sogou.com/web?query=ip&ie=utf8"
     page_buf = download_page(url,proxy)
+    print  page_buf
     dom = etree.HTML(page_buf)
     ipproxy = "".join(dom.xpath("//div[@id='ipsearchresult']/strong/text()"))
     print 'download proxy content: ' + '\n' + ipproxy

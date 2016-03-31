@@ -5,7 +5,7 @@ import time
 
 from selenium import webdriver
 
-from imgorc import uu_api,imgtest
+from test.saic import uu_api,imgtest
 
 inpath = 'E:\\xbzx\\test\\saic\\img.png'
 outpath = 'E:\\xbzx\\test\\saic\\yzm.png'
