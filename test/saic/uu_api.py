@@ -5,7 +5,6 @@ import urllib2
 
 from poster.encode import multipart_encode
 from poster.streaminghttp import register_openers
-from selenium import webdriver
 
 #post方式上传文件及图片
 def PostUpData(inpath):
