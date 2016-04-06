@@ -80,7 +80,6 @@ ITEM_PIPELINES = {
    #   'zbzxtest.pipelines.Pipelinepyrating':324,
    #  'zbzxtest.pipelines.Pipelinelnqyxypgw':324,
     'zbzxtest.pipelines.Pipeline51jobsx':325
-
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 301,
 }
 
