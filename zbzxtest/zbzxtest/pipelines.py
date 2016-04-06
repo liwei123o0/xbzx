@@ -80,7 +80,6 @@ class Pipeline12312(object):
         self.cur.close()
         self.conn.close()
 class Pipelinebgcheck(object):
-
     def open_spider(self,spider):
         self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
@@ -101,22 +100,25 @@ class Pipelinebgcheck(object):
         self.conn.close()
 class Pipelineccxi(object):
     def open_spider(self,spider):
+        self.cout = 0
         self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='ccxi':
-            print "##########ccxi###########"
+            print "##########ccxi%s###########"%self.cout
             for k in item:
-                print item[k]
+                print "%s:%s"%(k,item[k])
             try:
-                self.cur.execute(u"INSERT INTO test.ccxi ("
-                                 "name,pj,szxpj,spjsj,zzxpj,zpjsj,url) VALUES "
+                self.cur.execute(u"INSERT INTO spider.ccxi ("
+                                 "url,name,pj,szxpj,spjsj,zzxpj,zpjsj) VALUES "
                                  "('%s','%s','%s','%s','%s','%s','%s')"%(
-                                item['name'],item['pj'],item['szxpj'],item['spjsj'],item['zzxpj'],item['zpjsj'],item['url'],
+                                item['url'],item['name'],item['pj'],item['szxpj'],item['spjsj'],item['zzxpj'],
+                                item['zpjsj']
                                 ))
                 self.conn.commit()
             except MySQLdb.Error,e :
                 print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            self.cout += 1
     def close_spider(self,spider):
         self.cur.close()
         self.conn.close()
