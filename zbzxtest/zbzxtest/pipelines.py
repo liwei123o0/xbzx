@@ -9,21 +9,21 @@ import MySQLdb
 class ZbzxtestPipeline(object):
     def open_spider(self,spider):
         self.cout = 0
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='12312':
             item['fzdw'] = item['fzdw'].replace(u"发证单位（协会）：","")
-            # try:
-            #     self.cur.execute("INSERT INTO test.xypj ("
-            #                      "URL,NAME,XY,ZSBH,FBTIME,YSTIME,FZDW,GSZCH,JHDM,FRDB,ZCZB,SSHY,QYWZ,SSDQ,YB,YYDZ,ZYYW) VALUES "
-            #                      "('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(
-            #                     item['url'],item['name'],item['xy'],item['zsbh'],item['bftime'],item['yxtime'],item['fzdw'],
-            #                     item['gszch'],item['jgdm'],item['frdb'],item['zczb'],item['sshy'],item['qywz'],item['ssdq'],
-            #                     item['yb'],item['yydz'],item['zyyw'],))
-            #     self.conn.commit()
-            # except MySQLdb.Error,e :
-            #     print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            try:
+                self.cur.execute("INSERT INTO spider.g12312 ("
+                                 "URL,NAME,XY,ZSBH,FBTIME,YSTIME,FZDW,GSZCH,JHDM,FRDB,ZCZB,SSHY,QYWZ,SSDQ,YB,YYDZ,ZYYW) VALUES "
+                                 "('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(
+                                item['url'],item['name'],item['xy'],item['zsbh'],item['bftime'],item['yxtime'],item['fzdw'],
+                                item['gszch'],item['jgdm'],item['frdb'],item['zczb'],item['sshy'],item['qywz'],item['ssdq'],
+                                item['yb'],item['yydz'],item['zyyw'],))
+                self.conn.commit()
+            except MySQLdb.Error,e :
+                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
             try:
                 print u'##################%s###############'%self.cout
                 # print type(spider.proxy)
@@ -60,7 +60,7 @@ class JrttPipeline(object):
             return item
 class Pipeline12312(object):
     def open_spider(self,spider):
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='12312search':
@@ -82,7 +82,7 @@ class Pipeline12312(object):
 class Pipelinebgcheck(object):
 
     def open_spider(self,spider):
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='bgcheck':
@@ -101,7 +101,7 @@ class Pipelinebgcheck(object):
         self.conn.close()
 class Pipelineccxi(object):
     def open_spider(self,spider):
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='ccxi':
@@ -123,7 +123,7 @@ class Pipelineccxi(object):
 class Pipelinepyrating(object):
     def open_spider(self,spider):
         self.cout = 0
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='pyrating':
@@ -148,7 +148,7 @@ class Pipelinepyrating(object):
 class Pipelinelhratings(object):
     def open_spider(self,spider):
         self.cout = 0
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='lhratings':
@@ -171,7 +171,7 @@ class Pipelinelhratings(object):
 class Pipelinelnqyxypgw(object):
     def open_spider(self,spider):
         self.cout = 0
-        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
         self.cur  =self.conn.cursor()
     def process_item(self, item, spider):
         if spider.name=='lnqyxypgw':
@@ -187,6 +187,30 @@ class Pipelinelnqyxypgw(object):
             #     self.conn.commit()
             # except MySQLdb.Error,e :
             #     print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            self.cout += 1
+    def close_spider(self,spider):
+        self.cur.close()
+        self.conn.close()
+class Pipeline51jobsx(object):
+    def open_spider(self,spider):
+        self.cout = 0
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+        self.cur  =self.conn.cursor()
+    def process_item(self, item, spider):
+        if spider.name=='51jobsx':
+            print "##########51jobsx%s###########"%self.cout
+            for k in item:
+                print "%s:%s"%(k,item[k])
+            try:
+                self.cur.execute(u"INSERT INTO spider.job51sx ("
+                                 "url,name,job,address,pay,pub_date,contact) VALUES "
+                                 "('%s','%s','%s','%s','%s','%s','%s')"%(
+                                item['url'],item['name'],item['job'],item['address'],item['pay'],item['pub_date'],
+                                item['contact']
+                                ))
+                self.conn.commit()
+            except MySQLdb.Error,e :
+                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
             self.cout += 1
     def close_spider(self,spider):
         self.cur.close()

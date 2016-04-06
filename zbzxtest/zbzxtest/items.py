@@ -87,3 +87,12 @@ class Itemlnqyxypgw(scrapy.Item):
     zcd = scrapy.Field()
     hmd = scrapy.Field()
     url = scrapy.Field()
+
+class ItemJob51SX(scrapy.Item):
+    url = scrapy.Field()
+    job = scrapy.Field()
+    name = scrapy.Field()
+    address = scrapy.Field()
+    pay = scrapy.Field()
+    pub_date = scrapy.Field()
+    contact = scrapy.Field()

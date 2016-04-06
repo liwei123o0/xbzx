@@ -41,12 +41,12 @@ def crawl():
                 print dd
                 print xz
                 print pub_time
-                try:
-                    cur.execute("INSERT INTO test.job51(name,zwname,dd,xz,pub_time,url) VALUES ('%s','%s','%s','%s','%s','%s')"%(
-                        name,zwname,dd,xz,pub_time,url))
-                    conn.commit()
-                except MySQLdb.Error,e:
-                    print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+                # try:
+                #     cur.execute("INSERT INTO test.job51(name,zwname,dd,xz,pub_time,url) VALUES ('%s','%s','%s','%s','%s','%s')"%(
+                #         name,zwname,dd,xz,pub_time,url))
+                #     conn.commit()
+                # except MySQLdb.Error,e:
+                #     print "Mysql Error %d: %s" % (e.args[0], e.args[1])
         except:
             cur.close()
             conn.close()

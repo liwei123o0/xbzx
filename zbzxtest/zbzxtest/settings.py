@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'zbzxtest.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0'
 # LOG_ENABLED = False
-# LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'INFO'
 
 SPLASH_URL = 'http://192.168.59.103:8050'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
@@ -71,14 +71,15 @@ HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'zbzxtest.pipelines.ZbzxtestPipeline': 300,
+   'zbzxtest.pipelines.ZbzxtestPipeline': 300,
    #  'zbzxtest.pipelines.JrttPipeline':333,
-   #  'zbzxtest.pipelines.Pipeline12312':323,
+    'zbzxtest.pipelines.Pipeline12312':323,
    #  'zbzxtest.pipelines.Pipelinebgcheck':324,
    #  'zbzxtest.pipelines.Pipelineccxi':324,
    #  'zbzxtest.pipelines.Pipelinelhratings':324,
    #   'zbzxtest.pipelines.Pipelinepyrating':324,
-    'zbzxtest.pipelines.Pipelinelnqyxypgw':324,
+   #  'zbzxtest.pipelines.Pipelinelnqyxypgw':324,
+    'zbzxtest.pipelines.Pipeline51jobsx':325
 
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 301,
 }
