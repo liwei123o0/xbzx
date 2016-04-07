@@ -15,7 +15,7 @@ class Spiderccxi(CrawlSpider):
     conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
     start_urls = [
-                  # 'http://www.pyrating.cn/zh-cn/statement/qiyezhaiquanpingji',
+                  'http://www.pyrating.cn/zh-cn/statement/qiyezhaiquanpingji',
                   'http://www.pyrating.cn/zh-cn/statement/gongsizhaiquanpingji',
                   'http://www.pyrating.cn/zh-cn/statement/jihezhaiquanpingji',
                   'http://www.pyrating.cn/zh-cn/statement/zhutipingji'
