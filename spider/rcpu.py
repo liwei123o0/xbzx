@@ -6,9 +6,9 @@ import MySQLdb
 import time
 
 def nameSQL():
-    conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
-    cur.execute("SELECT FRDB FROM test.xypj  LIMIT 1000")
+    cur.execute("SELECT FRDB FROM spider.shxsj  LIMIT 1000")
     keyword =cur.fetchall()
     cur.close()
     conn.close()
