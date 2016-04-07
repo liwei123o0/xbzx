@@ -130,13 +130,15 @@ class Pipelinepyrating(object):
     def process_item(self, item, spider):
         if spider.name=='pyrating':
             print "##########pyrating%s###########"%self.cout
-            for k in item:
-                print "%s:%s"%(k,item[k])
+            print item
+            # for k in item:
+            #     print item
+            #     print "%s:%s"%(k,item[k])
             try:
                 self.cur.execute(u"INSERT INTO test.pyrating ("
-                                 "name,url,qytype,ztjb,zjjb,pjzw,pjnd,pjsj) VALUES "
+                                 "url,name,qytype,ztjb,zjjb,pjzw,pjnd,pjsj) VALUES "
                                  "('%s','%s','%s','%s','%s','%s','%s','%s')"%(
-                                item['name'],item['url'],item['qytype'],item['ztjb'],item['zjjb'],item['pjzw'],item['pjnd'],
+                                item['url'],item['name'],item['qytype'],item['ztjb'],item['zjjb'],item['pjzw'],item['pjnd'],
                                 item['pjsj']
                                 ))
                 self.conn.commit()
