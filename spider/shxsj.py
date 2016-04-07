@@ -10,8 +10,8 @@ def crawl():
     conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
     urls = []
-    for i in xrange(1,179,1):
-        urls.append("http://www.shxsj.com/lists.php?page=%s&menuid=107&catid=75"%i)
+    for i in xrange(1,260,1):
+        urls.append("http://www.shxsj.com/lists.php?page=%s&menuid=107&catid=82"%i)
     for url in urls:
         driver.get(url)
         try:
