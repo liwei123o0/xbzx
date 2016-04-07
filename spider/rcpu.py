@@ -16,42 +16,41 @@ def nameSQL():
 
 def crawl():
     driver = webdriver.Firefox()
-    conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
     url = "http://rcpu.cwun.org/Judge.aspx"
     driver.get(url)
-    try:
-        driver.find_element_by_xpath("(//td[@colspan='6'])[1]/input").send_keys(u"安康")
-        driver.find_element_by_xpath("(//td[@colspan='3'])[last()]/input").click()
-        time.sleep(5)
-        url = driver.current_url
-        for  i in range(len(driver.find_elements_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()>1]"))):
-            name = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[2]"%(i+2)).text
-            sqtype = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[3]"%(i+2)).text
-            xydj = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[4]"%(i+2)).text
-            pjnd = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[5]"%(i+2)).text
-            bfrq = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[6]"%(i+2)).text
-            yxqz = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[7]"%(i+2)).text
-            bfjg = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[8]"%(i+2)).text
-            try:
-                cur.execute("INSERT INTO test.rcpu(name,sqtype,xydj,pjnd,bfrq,yxqz,bfjg) VALUES ('%s','%s','%s','%s','%s','%s','%s')"%(
-                    name,sqtype,xydj,pjnd,bfrq,yxqz,bfjg))
-                conn.commit()
-            except MySQLdb.Error,e:
-                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
-            print url
-            print name
-            print sqtype
-            print xydj
-            print pjnd
-            print bfrq
-            print yxqz
-            print bfjg
-    except:
-        cur.close()
-        conn.close()
-        driver.quit()
-        pass
+    for i in xrange(1,37,1):
+        try:
+            url = driver.current_url
+            for  i in range(len(driver.find_elements_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()>1]"))-1):
+                name = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[2]"%(i+2)).text
+                sqtype = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[3]"%(i+2)).text
+                xydj = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[4]"%(i+2)).text
+                pjnd = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[5]"%(i+2)).text
+                bfrq = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[6]"%(i+2)).text
+                yxqz = driver.find_element_by_xpath("//table[@id='ContentPlaceHolder1_GridViewJudge']//tr[position()=%s]/td[7]"%(i+2)).text
+                try:
+                    cur.execute("INSERT INTO spider.rcpu(url,name,sqtype,xydj,pjnd,bfrq,yxqz) VALUES ('%s','%s','%s','%s','%s','%s','%s')"%(
+                        url,name,sqtype,xydj,pjnd,bfrq,yxqz))
+                    conn.commit()
+                except MySQLdb.Error,e:
+                    print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+                print url
+                print name
+                print sqtype
+                print xydj
+                print pjnd
+                print bfrq
+                print yxqz
+
+            driver.find_element_by_xpath("//a[@id='ContentPlaceHolder1_GridViewJudge_LinkButtonNextPage']").click()
+            time.sleep(3)
+        except:
+        #     cur.close()
+        #     conn.close()
+        #     driver.quit()
+            pass
     cur.close()
     conn.close()
     driver.quit()
