@@ -96,3 +96,11 @@ class ItemJob51SX(scrapy.Item):
     pay = scrapy.Field()
     pub_date = scrapy.Field()
     contact = scrapy.Field()
+
+
+class ItemBcpcn(scrapy.Item):
+    url = scrapy.Field()
+    name = scrapy.Field()
+    cftype = scrapy.Field()
+    cftime = scrapy.Field()
+    cfjg = scrapy.Field()

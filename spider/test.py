@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #! /usr/bin/env python
+import chardet
+import urllib2
 
-for i in xrange(1,100,2):
-    print (i)
+html = urllib2.urlopen("http://www.bcpcn.com/product/hhbang/63920/index.html").read()
+print html

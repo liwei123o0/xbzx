@@ -219,3 +219,27 @@ class Pipeline51jobsx(object):
     def close_spider(self,spider):
         self.cur.close()
         self.conn.close()
+class PipelineBcpcn(object):
+    def open_spider(self,spider):
+        self.cout = 0
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+        self.cur  =self.conn.cursor()
+    def process_item(self, item, spider):
+        if spider.name=='bcpcn':
+            print "##########bcpcn%s###########"%self.cout
+            print item
+            for k in item:
+                print "%s:%s"%(k,item[k])
+            # try:
+            #     self.cur.execute(u"INSERT INTO spider.bcpcn ("
+            #                      "url,name,cftype,cftime,cfjg) VALUES "
+            #                      "('%s','%s','%s','%s','%s')"%(
+            #                     item['url'],item['name'],item['cftype'],item['cftime'],item['cfjg']
+            #                     ))
+            #     self.conn.commit()
+            # except MySQLdb.Error,e :
+            #     print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            self.cout += 1
+    def close_spider(self,spider):
+        self.cur.close()
+        self.conn.close()
