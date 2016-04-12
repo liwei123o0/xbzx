@@ -15,17 +15,22 @@ def getchecknum(input):
     else:
         s = 11-n
     return str(s)
+if __name__ =='__main__':
+    print getchecknum("61000030000458")
 
-while True:
-    code = raw_input(u'请输入该企业15位注册码:')
-    try:
-        len(code) == 15
-        num = code[:14]
-        check_num = int(code[14])
-        if check_num == int(getchecknum(num)):
-            print u'恭喜你，注册码正确。'
-            break
-        else:
-            print u'请注意，该注册码错误！！！'
-    except:
-        print u"请输入正确的企业15位注册码"
+    # for i in xrange(2000000,20001000,1):
+    #     num = "6100000"+str(i)
+    #     rexnum = getchecknum(num)
+    #     gsnum =  num+rexnum
+    #     code = gsnum
+    #     try:
+    #         len(code) == 15
+    #         num = code[:14]
+    #         check_num = int(code[14])
+    #         if check_num == int(getchecknum(num)):
+    #             print gsnum
+    #             print u'恭喜你，注册码正确。'
+    #         else:
+    #             print u'请注意，该注册码错误！！！'
+    #     except:
+    #         print u"请输入正确的企业15位注册码"
