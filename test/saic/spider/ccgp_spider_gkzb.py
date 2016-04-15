@@ -43,7 +43,7 @@ def ccgpspider():
                 zbtype = u"公开招标"
 
                 try:
-                    cur.execute("INSERT INTO spider.zb_ccgp("
+                    cur.execute("INSERT INTO spider.zb_gkzb("
                                 "url,title,pm,cgr,xzqy,ggsj,filetime,fileprice,fileaddress,kbtime,"
                                 "kbaddress,budget,xmlxr,xmlxdh,cgrdz,cgrdh,zbtype) VALUES ("
                                 "'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',"

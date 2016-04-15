@@ -30,23 +30,18 @@ def ccgpspider():
                     pass
                 url = driver.current_url
                 title = driver.find_element_by_xpath("//h2").text
-                pm = driver.find_element_by_xpath("//div[@class='vT_detail_content w760c']").text
-
+                content = driver.find_element_by_xpath("//div[@class='vT_detail_content w760c']").text
                 zbtype = u"中标公告"
-                # try:
-                #     cur.execute("INSERT INTO spider.zb_ccgp_zbgg("
-                #                 "url,title,pm,"
-                #                 "zbtype) VALUES ("
-                #                 "'%s','%s','%s','%s')"%(
-                #         url,title,pm,
-                #         zbtype))
-                #     conn.commit()
-                # except MySQLdb.Error,e:
-                #     print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+                try:
+                    cur.execute("INSERT INTO spider.zb_ccgp_zbgg(url,title,content,zbtype) VALUES ("
+                                "'%s','%s','%s','%s')"%(url,title,content,zbtype))
+                    conn.commit()
+                except MySQLdb.Error,e:
+                    print "Mysql Error %d: %s" % (e.args[0], e.args[1])
 
                 print url
                 print title
-                print pm
+                print content
                 print zbtype
 
                 driver.close()
