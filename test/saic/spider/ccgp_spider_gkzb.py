@@ -2,7 +2,7 @@
 #! /usr/bin/env python
 from  selenium import webdriver
 import urllib2
-import time
+import MySQLdb
 
 def load_keyword(path):
 
@@ -10,7 +10,8 @@ def load_keyword(path):
     return keywords
 
 def ccgpspider():
-
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    cur  =conn.cursor()
     driver = webdriver.Firefox()
     keywords = load_keyword("http://192.168.10.25/keyword/keyword.txt")
     urls =[]
@@ -41,6 +42,18 @@ def ccgpspider():
                 cgrdh = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[17]/td[last()]").text
                 zbtype = u"公开招标"
 
+                try:
+                    cur.execute("INSERT INTO spider.zb_ccgp("
+                                "url,title,pm,cgr,xzqy,ggsj,filetime,fileprice,fileaddress,kbtime,"
+                                "kbaddress,budget,xmlxr,xmlxdh,cgrdz,cgrdh,zbtype) VALUES ("
+                                "'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',"
+                                "'%s','%s','%s','%s','%s')"%(
+                        url,title,pm,cgr,xzqy,ggsj,filetime,fileprice,fileaddress,kbtime,
+                        kbaddress,budget,xmlxr,xmlxdh,cgrdz,cgrdh,zbtype))
+                    conn.commit()
+                except MySQLdb.Error,e:
+                    print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+
                 print url
                 print title
                 print pm
@@ -66,10 +79,9 @@ def ccgpspider():
                 driver.switch_to_window(windows[0])
                 print "ERROR"
                 continue
-        # try:
-        #     driver.find_element_by_xpath("(//a[@class='next'])[1]").click()
-        # except:
-        #     continue
+
+    cur.close()
+    conn.close()
     driver.quit()
 if __name__ =='__main__':
     ccgpspider()
