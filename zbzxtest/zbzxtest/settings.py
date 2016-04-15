@@ -71,17 +71,18 @@ HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'zbzxtest.pipelines.ZbzxtestPipeline': 800,
+   # 'zbzxtest.pipelines.ZbzxtestPipeline': 800,
    #  'zbzxtest.pipelines.JrttPipeline':301,
-    'zbzxtest.pipelines.Pipeline12312':802,
+   #  'zbzxtest.pipelines.Pipeline12312':802,
    #  'zbzxtest.pipelines.Pipelinebgcheck':303,
    #  'zbzxtest.pipelines.Pipelineccxi':304,
    #  'zbzxtest.pipelines.Pipelinelhratings':305,
    #   'zbzxtest.pipelines.Pipelinepyrating':306,
    #  'zbzxtest.pipelines.Pipelinelnqyxypgw':307,
-    'zbzxtest.pipelines.Pipeline51jobsx':800,
+   #  'zbzxtest.pipelines.Pipeline51jobsx':800,
+     'zbzxtest.pipelines.Pipeline51jobsax':800,
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 309,
-    'zbzxtest.pipelines.PipelineBcpcn':210,
+    # 'zbzxtest.pipelines.PipelineBcpcn':210,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

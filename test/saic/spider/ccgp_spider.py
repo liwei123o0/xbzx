@@ -20,10 +20,10 @@ def ccgpspider():
         driver.get(url)
         for i in xrange(1,len(driver.find_elements_by_xpath("//ul[@class='vT-srch-result-list-bid']/li"))+1,1):
             try:
-                url = driver.find_element_by_xpath("//ul[@class='vT-srch-result-list-bid']/li[%s]/a"%i).get_attribute("href")
                 driver.find_element_by_xpath("//ul[@class='vT-srch-result-list-bid']/li[%s]/a"%i).click()
                 windows = driver.window_handles
                 driver.switch_to_window(windows[1])
+                url = driver.current_url
                 title = driver.find_element_by_xpath("//h2").text
                 pm = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[3]/td[last()]/p").text
                 print url
@@ -32,7 +32,21 @@ def ccgpspider():
                 driver.close()
                 driver.switch_to_window(windows[0])
             except:
+                try:
+                    print "#################"
+                    print driver.current_url
+                    title = driver.find_element_by_xpath("(//div[@class='vT_detail_content w760c']/div)[1]/b").text
+                    content = driver.find_element_by_xpath("(//div[@class='vT_detail_content w760c']/div[@align='left'])[2]").text
+                    print title
+                    print content
+                    driver.close()
+                    driver.switch_to_window(windows[0])
                     print "ERROR"
+                except:
+                    driver.close()
+                    driver.switch_to_window(windows[0])
+                    print "ERROR"
+                    continue
         # try:
         #     driver.find_element_by_xpath("(//a[@class='next'])[1]").click()
         # except:
