@@ -27,20 +27,7 @@ def ccgpspider():
                 url = driver.current_url
                 title = driver.find_element_by_xpath("//h2").text
                 pm = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[3]/td[last()]/p").text
-                cgr = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[4]/td[last()]").text
-                xzqy = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[5]/td[last()-2]").text
-                ggsj = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[5]/td[last()]").text
-                filetime = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[6]/td[last()]").text
-                fileprice = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[7]/td[last()]").text
-                fileaddress = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[8]/td[last()]").text
-                kbtime = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[9]/td[last()]").text
-                kbaddress = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[10]/td[last()]").text
-                budget = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[11]/td[last()]").text
-                xmlxr = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[13]/td[last()]").text
-                xmlxdh = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[14]/td[last()]").text
-                cgrdz = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[16]/td[last()]").text
-                cgrdh = driver.find_element_by_xpath("//div[@class='table']//tbody/tr[17]/td[last()]").text
-                zbtype = u"公开招标"
+                zbtype = u"中标公告"
 
                 try:
                     cur.execute("INSERT INTO spider.zb_ccgp("
