@@ -12,7 +12,7 @@ def ccpgSpider(num):
     cur  =conn.cursor()
     driver.get("http://www.ccgp-shaanxi.gov.cn")
 
-    driver.find_element_by_xpath("((//table[@class='bb1'])[1]//td/a)[%s]"%num).click()
+    driver.find_element_by_xpath("((//table[@class='bb1'])[2]//td/a)[%s]"%num).click()
     driver.close()
     windos = driver.window_handles
     driver.switch_to_window(windos[1])
@@ -34,9 +34,10 @@ def ccpgSpider(num):
         print url
         print title
         print content
+
         try:
-            cur.execute("INSERT INTO spider.zb_ccgp_xjgg(url,title,content,) VALUES ("
-                                "'%s','%s','%s')"%(url,title,content))
+            cur.execute("INSERT INTO spider.zb_ccgp_shaanxi(url,title,content)" \
+              " VALUES ('%s','%s','%s')"%(url,title,content))
             conn.commit()
         except MySQLdb.Error,e:
             print "Mysql Error %d: %s" % (e.args[0], e.args[1])
@@ -51,5 +52,7 @@ def ccpgSpider(num):
 if __name__ =='__main__':
 
     for i in xrange(1,12,1):
-
-        ccpgSpider(i)
+        # try:
+            ccpgSpider(i)
+        # except:
+        #     continue
