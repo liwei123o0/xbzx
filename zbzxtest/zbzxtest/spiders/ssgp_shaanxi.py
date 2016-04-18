@@ -21,3 +21,4 @@ class ccgpShanxiSpider(CrawlSpider):
         sel = Selector(response)
         title = sel.xpath("//h2/text()").extract()[0]
         print title
+
