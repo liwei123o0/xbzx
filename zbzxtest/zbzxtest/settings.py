@@ -34,7 +34,7 @@ SPLASH_URL = 'http://192.168.59.103:8050'
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED=False
+# COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED=False
@@ -80,7 +80,7 @@ ITEM_PIPELINES = {
    #   'zbzxtest.pipelines.Pipelinepyrating':306,
    #  'zbzxtest.pipelines.Pipelinelnqyxypgw':307,
    #  'zbzxtest.pipelines.Pipeline51jobsx':800,
-     'zbzxtest.pipelines.Pipeline51jobsax':800,
+   #   'zbzxtest.pipelines.Pipeline51jobsax':800,
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 309,
     # 'zbzxtest.pipelines.PipelineBcpcn':210,
 }
