@@ -178,4 +178,4 @@ if __name__ =='__main__':
     #         num1 = "%s%s"%(num,jgm)
     #         tyxym = tyzzjgxym(num1)
     #         print tyzzjgm(num1,tyxym)
-    print tyzzjgxym('93610831081747620')
+    print tyzzjgxym('91411600783436694')
