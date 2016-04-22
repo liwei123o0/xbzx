@@ -79,7 +79,7 @@ ITEM_PIPELINES = {
    #  'zbzxtest.pipelines.Pipelinelhratings':305,
    #   'zbzxtest.pipelines.Pipelinepyrating':306,
    #  'zbzxtest.pipelines.Pipelinelnqyxypgw':307,
-   #  'zbzxtest.pipelines.Pipeline51jobsx':800,
+    'zbzxtest.pipelines.Pipeline51jobsx':800,
    #   'zbzxtest.pipelines.Pipeline51jobsax':800,
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 309,
     # 'zbzxtest.pipelines.PipelineBcpcn':210,

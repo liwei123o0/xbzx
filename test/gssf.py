@@ -16,7 +16,7 @@ def getchecknum(input):
         s = 11-n
     return str(s)
 if __name__ =='__main__':
-    print getchecknum("41150360605855")
+    print getchecknum("65400305006244")
 
     # for i in xrange(2000000,20001000,1):
     #     num = "6100000"+str(i)
