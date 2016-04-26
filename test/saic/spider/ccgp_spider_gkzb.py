@@ -6,19 +6,21 @@ import MySQLdb
 
 def load_keyword(path):
 
-    keywords = urllib2.urlopen(path).readlines()
+    keywords = urllib2.urlopen(path).readlines()[0]
+    keywords = keywords.split('\r')
     return keywords
 
 def ccgpspider():
     conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
     driver = webdriver.Firefox()
-    keywords = load_keyword("http://192.168.10.25/keyword/keyword.txt")
+    keywords = load_keyword("http://127.0.0.1/keywords/keyword.txt")
     urls =[]
     for keyword in keywords:
         urls.append("http://search.ccgp.gov.cn/dataB.jsp?searchtype=1&page_index=1&start_time=2016%3A04%3A06&end_time=2016%3A04%3A13&timeType=2&searchchannel=0&dbselect=bidx&kw={}&bidSort=0&pinMu=0&bidType=1&buyerName=&projectId=&displayZone=&zoneId=&agentName=".format(keyword.replace('\r\n','')))
-    for url in urls:
+    for url in urls[159:]:
         driver.get(url)
+
         for i in xrange(1,len(driver.find_elements_by_xpath("//ul[@class='vT-srch-result-list-bid']/li"))+1,1):
             try:
                 driver.find_element_by_xpath("//ul[@class='vT-srch-result-list-bid']/li[%s]/a"%i).click()
@@ -43,7 +45,7 @@ def ccgpspider():
                 zbtype = u"公开招标"
 
                 try:
-                    cur.execute("INSERT INTO spider.zb_gkzb("
+                    cur.execute("INSERT INTO spider.zb_ccgp_gkzb("
                                 "url,title,pm,cgr,xzqy,ggsj,filetime,fileprice,fileaddress,kbtime,"
                                 "kbaddress,budget,xmlxr,xmlxdh,cgrdz,cgrdh,zbtype) VALUES ("
                                 "'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',"
