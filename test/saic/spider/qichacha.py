@@ -5,11 +5,12 @@ from  selenium import  webdriver
 import time
 import re
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column,VARCHAR,create_engine,TEXT
+from sqlalchemy import Column,VARCHAR,create_engine,TEXT,TIMESTAMP
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
 from  sqlalchemy.databases import mysql
-
+#设置入库时间
+from sqlalchemy.sql import func
 
 #数据库配置信息
 config = {
@@ -29,7 +30,7 @@ Base = declarative_base()
 class QichachaTable(Base):
 
     __tablename__=config['tablename']
-
+    #url去重主键索引设置
     url = Column(VARCHAR(255),primary_key=True,index=True,unique=True)
     name = Column(TEXT)
     xym = Column(TEXT)
@@ -53,9 +54,11 @@ class QichachaTable(Base):
     qynb = Column(mysql.LONGTEXT)
     wxzc = Column(TEXT)
     news = Column(TEXT)
+    #设置入库时间
+    insert_time = Column(TIMESTAMP,server_default=func.now())
 
     def __init__(self,url,name,xym,jgm,jyzt,gstype,cltime,fr,zczb,yyqx,djjg,fztime,qyaddress,
-                 jyfw,gdxx,zyry,bgjl,fzjg,susong,touzi,qynb,wxzc,news):
+                 jyfw,gdxx,zyry,bgjl,fzjg,susong,touzi,qynb,wxzc,news,insert_time):
         self.url = url
         self.name = name
         self.xym = xym
@@ -79,6 +82,8 @@ class QichachaTable(Base):
         self.qynb = qynb
         self.wxzc = wxzc
         self.news = news
+        self.insert_time = insert_time
+
 
 
 
@@ -92,7 +97,7 @@ def createAll(engine):
 def dropAll(engine):
     Base.metadata.drop_all(engine)
 
-def qichachacookie():
+def qichachacookie(num):
 
     #连接数据库
     engine = create_engine('%s://%s:%s@%s:%s/%s?charset=%s'
@@ -112,79 +117,80 @@ def qichachacookie():
     for cookie in cookies:
         driver.add_cookie(cookie)
     urls =[]
-    for i in xrange(1,500,1):
+    for i in xrange(num,500,1):
         urls.append("http://qichacha.com/gongsi?prov=XJ&p=%s"%i)
     for url in urls:
         driver.get(url)
         for j in xrange(1,len(driver.find_elements_by_xpath("(//a[@class='list-group-item clearfix'])"))+1,1):
-            driver.find_element_by_xpath("(//a[@class='list-group-item clearfix'])[%s]"%j).click()
-            windows = driver.window_handles
-            driver.switch_to_window(windows[1])
-            time.sleep(5)
-            url = driver.current_url
-            name = driver.find_element_by_xpath("//div[@class='col-md-8 m-b m-t']//img").get_attribute("alt")
-            xym = driver.find_element_by_xpath("//ul[@class='company-base']/li[1]").text
-            xym = re.findall(r"\d+",xym)[0]
-            jgm = driver.find_element_by_xpath("//ul[@class='company-base']/li[2]").text
-            jgm = re.findall(r"\d+",jgm)[0]
-            jyzt = driver.find_element_by_xpath("//ul[@class='company-base']/li[3]").text
-            jyzt = re.sub(r"经营状态：","",jyzt)
-            gstype = driver.find_element_by_xpath("//ul[@class='company-base']/li[4]").text
-            gstype = re.sub(r"公司类型：","",gstype)
-            cltime = driver.find_element_by_xpath("//ul[@class='company-base']/li[5]").text
-            cltime = re.sub(r"成立日期：","",cltime)
-            fr = driver.find_element_by_xpath("//ul[@class='company-base']/li[6]").text
-            fr = re.sub(r"法定代表：","",fr)
-            zczb = driver.find_element_by_xpath("//ul[@class='company-base']/li[7]").text
-            zczb = re.sub(r"注册资本：","",zczb)
-            yyqx = driver.find_element_by_xpath("//ul[@class='company-base']/li[8]").text
-            yyqx = re.sub(r"营业期限：","",yyqx)
-            djjg = driver.find_element_by_xpath("//ul[@class='company-base']/li[9]").text
-            djjg = re.sub(r"登记机关：","",djjg)
-            fztime = driver.find_element_by_xpath("//ul[@class='company-base']/li[10]").text
-            fztime = re.sub(r"发照日期：","",fztime)
-            qyaddress = driver.find_element_by_xpath("//ul[@class='company-base']/li[11]").text
-            qyaddress = re.sub(r"企业地址：","",qyaddress)
-            jyfw = driver.find_element_by_xpath("//ul[@class='company-base']/li[12]").text
-            jyfw = re.sub(r"经营范围：","",jyfw)
-            zdxx = driver.find_elements_by_xpath("//section[@class='panel b-a clear']")
-            gdxx=''
-            zyry=''
-            bgjl=''
-            fzjg=''
-            for i in zdxx:
-                if i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'股东信息':
-                    gdxx = i.text
-                elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'主要人员':
-                    zyry =i.text
-                elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'变更记录':
-                    bgjl =i.text
-                elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'分支机构':
-                    fzjg =i.text
+            try:
+                driver.find_element_by_xpath("(//a[@class='list-group-item clearfix'])[%s]"%j).click()
+                windows = driver.window_handles
+                driver.switch_to_window(windows[1])
+                time.sleep(6)
+                url = driver.current_url
+                name = driver.find_element_by_xpath("//div[@class='col-md-8 m-b m-t']//img").get_attribute("alt")
+                xym = driver.find_element_by_xpath("//ul[@class='company-base']/li[1]").text
+                xym = re.findall(r"\d+",xym)[0]
+                jgm = driver.find_element_by_xpath("//ul[@class='company-base']/li[2]").text
+                jgm = re.findall(r"\d+",jgm)[0]
+                jyzt = driver.find_element_by_xpath("//ul[@class='company-base']/li[3]").text
+                jyzt = re.sub(r"经营状态：","",jyzt)
+                gstype = driver.find_element_by_xpath("//ul[@class='company-base']/li[4]").text
+                gstype = re.sub(r"公司类型：","",gstype)
+                cltime = driver.find_element_by_xpath("//ul[@class='company-base']/li[5]").text
+                cltime = re.sub(r"成立日期：","",cltime)
+                fr = driver.find_element_by_xpath("//ul[@class='company-base']/li[6]").text
+                fr = re.sub(r"法定代表：","",fr)
+                zczb = driver.find_element_by_xpath("//ul[@class='company-base']/li[7]").text
+                zczb = re.sub(r"注册资本：","",zczb)
+                yyqx = driver.find_element_by_xpath("//ul[@class='company-base']/li[8]").text
+                yyqx = re.sub(r"营业期限：","",yyqx)
+                djjg = driver.find_element_by_xpath("//ul[@class='company-base']/li[9]").text
+                djjg = re.sub(r"登记机关：","",djjg)
+                fztime = driver.find_element_by_xpath("//ul[@class='company-base']/li[10]").text
+                fztime = re.sub(r"发照日期：","",fztime)
+                qyaddress = driver.find_element_by_xpath("//ul[@class='company-base']/li[11]").text
+                qyaddress = re.sub(r"企业地址：","",qyaddress)
+                jyfw = driver.find_element_by_xpath("//ul[@class='company-base']/li[12]").text
+                jyfw = re.sub(r"经营范围：","",jyfw)
+                zdxx = driver.find_elements_by_xpath("//section[@class='panel b-a clear']")
+                gdxx=''
+                zyry=''
+                bgjl=''
+                fzjg=''
+                for i in zdxx:
+                    if i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'股东信息':
+                        gdxx = i.text
+                    elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'主要人员':
+                        zyry =i.text
+                    elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'变更记录':
+                        bgjl =i.text
+                    elif i.find_element_by_xpath(".//span[@class='font-bold font-15 text-dark']").text ==u'分支机构':
+                        fzjg =i.text
 
-            driver.find_element_by_xpath("//a[@id='susong_title']").click()
-            time.sleep(2)
-            susong =driver.find_element_by_xpath("//div[@id='susong_div']").text
+                driver.find_element_by_xpath("//a[@id='susong_title']").click()
+                time.sleep(3)
+                susong =driver.find_element_by_xpath("//div[@id='susong_div']").text
 
-            driver.find_element_by_xpath("//a[@id='touzi_title']").click()
-            time.sleep(2)
-            touzi = driver.find_element_by_xpath("//div[@id='touzi_div']").text
+                driver.find_element_by_xpath("//a[@id='touzi_title']").click()
+                time.sleep(3)
+                touzi = driver.find_element_by_xpath("//div[@id='touzi_div']").text
 
-            driver.find_element_by_xpath("//a[@id='report_title']").click()
-            time.sleep(2)
-            # qynb = driver.find_element_by_xpath("//section[@class='panel pos-rlt  b-a report_info']")
-            qynb = driver.page_source
+                driver.find_element_by_xpath("//a[@id='report_title']").click()
+                time.sleep(3)
+                # qynb = driver.find_element_by_xpath("//section[@class='panel pos-rlt  b-a report_info']")
+                qynb = driver.page_source
 
-            driver.find_element_by_xpath("//a[@id='assets_title']").click()
-            time.sleep(2)
-            wxzc = driver.find_element_by_xpath("//div[@id='assets_div']").text
+                driver.find_element_by_xpath("//a[@id='assets_title']").click()
+                time.sleep(3)
+                wxzc = driver.find_element_by_xpath("//div[@id='assets_div']").text
 
-            driver.find_element_by_xpath("//a[@id='job_title']").click()
-            time.sleep(2)
-            news = driver.find_element_by_xpath("//div[@id='job_div']").text
-            print "######################"
-            print url
-            print name
+                driver.find_element_by_xpath("//a[@id='job_title']").click()
+                time.sleep(3)
+                news = driver.find_element_by_xpath("//div[@id='job_div']").text
+                print "######################"
+                print url
+                print name
             # print xym
             # print jgm
             # print jyzt
@@ -207,22 +213,27 @@ def qichachacookie():
             # print wxzc
             # print news
 
-            new_user = QichachaTable(url=url,name=name,xym=xym,jgm=jgm,jyzt=jyzt,gstype=gstype,cltime=cltime,
-                                fr=fr,zczb=zczb,yyqx=yyqx,djjg=djjg,fztime=fztime,qyaddress=qyaddress,
-                                jyfw=jyfw,gdxx=gdxx,zyry=zyry,bgjl=bgjl,fzjg=fzjg,susong=susong,touzi=touzi,
-                                qynb=qynb,wxzc=wxzc,news=news
-                                     )
-            session.add(new_user)
+                new_user = QichachaTable(url=url,name=name,xym=xym,jgm=jgm,jyzt=jyzt,gstype=gstype,cltime=cltime,
+                                    fr=fr,zczb=zczb,yyqx=yyqx,djjg=djjg,fztime=fztime,qyaddress=qyaddress,
+                                    jyfw=jyfw,gdxx=gdxx,zyry=zyry,bgjl=bgjl,fzjg=fzjg,susong=susong,touzi=touzi,
+                                    qynb=qynb,wxzc=wxzc,news=news,insert_time=func.now()
+                                         )
+                session.add(new_user)
+                try:
+                    session.commit()
+                except IntegrityError,e:
+                    print e.message
 
-            try:
-                session.commit()
-            except IntegrityError,e:
-                print e.message
+                driver.close()
+                driver.switch_to_window(windows[0])
+            except:
+                driver.close()
+                driver.switch_to_window(windows[0])
+                continue
 
-            driver.close()
-            driver.switch_to_window(windows[0])
     driver.quit()
     session.close()
 
 if __name__ =='__main__':
-    qichachacookie()
+    num = 6
+    qichachacookie(num)
