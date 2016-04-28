@@ -93,10 +93,6 @@ class QichachaTable(Base):
         self.news = news
         self.insert_time = insert_time
 
-
-
-
-
     def __repr__(self):
         return "<UserName('%s','%s')>"%(self.name,self.xym)
 #创建表
@@ -216,10 +212,10 @@ def qichachacookie(num):
     session.close()
 
 if __name__ =='__main__':
-    num = 1
+    num = 263
     while 1:
         try:
             qichachacookie(num)
         except:
+            num+=1
             continue
-
