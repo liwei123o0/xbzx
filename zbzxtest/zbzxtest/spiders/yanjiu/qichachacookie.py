@@ -2,7 +2,6 @@
 #! /usr/bin/env python
 from scrapy.spiders import Spider
 from scrapy.http import Request
-from chardet import detect
 
 class Qichacha(Spider):
     name = 'qichacha'

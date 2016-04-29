@@ -8,10 +8,12 @@ from scrapy import Selector
 
 class test(scrapy.Spider):
     name = 'test'
+
     start_urls = ['http://toutiao.com/']
 
     def start_requests(self):
-        script = """
+        script = \
+        """
         function main(splash)
             local url = splash.args.url
             assert(splash:go(url))
@@ -20,7 +22,8 @@ class test(scrapy.Spider):
                 html = splash:html(),
             }
         end
-                """
+        """
+
         for url in self.start_urls:
             yield scrapy.Request(url,self.parse,meta={
                 'splash':{
@@ -28,6 +31,7 @@ class test(scrapy.Spider):
                     'endpoint':'execute',
                 }
             })
+
     def parse(self, response):
         item = JrttItem()
         data = json.loads(response.body_as_unicode())

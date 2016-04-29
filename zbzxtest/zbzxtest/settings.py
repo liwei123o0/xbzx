@@ -21,9 +21,9 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firef
 # LOG_ENABLED = False
 LOG_LEVEL = 'INFO'
 
-SPLASH_URL = 'http://192.168.59.103:8050'
+SPLASH_URL = 'http://192.168.48.130:8050'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS=32
+CONCURRENT_REQUESTS=2
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
