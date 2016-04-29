@@ -26,5 +26,4 @@ class Qichacha(Spider):
         with open('qichacha.html','wb')as w:
             w.write(body.encode('utf8'))
         print response.url
-        # print detect(body)
 
