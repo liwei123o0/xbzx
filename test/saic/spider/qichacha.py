@@ -3,7 +3,7 @@
 
 '''
     Auth:liwei
-    Brief:企查查数据采集
+    Brief:企查查数据采集(新疆)
     Area:新疆
     Time:2016-4-28
 '''
@@ -196,8 +196,7 @@ def qichachacookie(num):
             new_user = QichachaTable(url=url,name=name,head=head,xym=xym,jgm=jgm,jyzt=jyzt,gstype=gstype,cltime=cltime,
                                     fr=fr,zczb=zczb,yyqx=yyqx,djjg=djjg,fztime=fztime,qyaddress=qyaddress,
                                     jyfw=jyfw,gdxx=gdxx,zyry=zyry,bgjl=bgjl,fzjg=fzjg,susong=susong,touzi=touzi,
-                                    qynb=qynb,wxzc=wxzc,news=news,insert_time=func.now()
-                                         )
+                                    qynb=qynb,wxzc=wxzc,news=news,insert_time=func.now())
             session.add(new_user)
             try:
                 session.commit()
@@ -212,7 +211,7 @@ def qichachacookie(num):
     session.close()
 
 if __name__ =='__main__':
-    num = 265
+    num = 1
     while 1:
         try:
             qichachacookie(num)

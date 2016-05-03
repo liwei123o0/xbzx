@@ -65,5 +65,3 @@ class test(scrapy.Spider):
     # def parse_item(self,response):
         # data = response.body
         # print data['html']
-
-

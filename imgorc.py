@@ -11,10 +11,11 @@ def OcrImg(inpath):
 
 if __name__ =='__main__':
 
-    import os
-    inpaths = os.listdir("E:\\xbzx\\yzm")
-    for inpath in inpaths:
-        inpath = "E:\\xbzx\\yzm\\%s"%inpath
-
-        print "%s:\n"%inpath
-        OcrImg(inpath)
+    # import os
+    # inpaths = os.listdir("E:\\xbzx\\yzm")
+    # for inpath in inpaths:
+    #     inpath = "E:\\xbzx\\yzm\\%s"%inpath
+    #
+    #     print "%s:\n"%inpath
+    #     OcrImg(inpath)
+    OcrImg("E:\\xbzx\\1.png")
