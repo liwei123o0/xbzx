@@ -217,4 +217,6 @@ if __name__ =='__main__':
             qichachacookie(num)
         except:
             num+=1
+            if num ==500:
+                num = 1
             continue
