@@ -4,7 +4,7 @@
 '''
     Auth:liwei
     Brief:企查查数据采集(新疆)
-    Area:新疆
+    Area:陕西
     Time:2016-4-28
 '''
 
@@ -21,7 +21,7 @@ from sqlalchemy.sql import func
 
 #数据库配置信息
 config = {
-    'tablename':'qichacha',
+    'tablename':'qichacha_sax',
     'sql':'mysql',
     'user':'root',
     'password':'root',
@@ -124,7 +124,7 @@ def qichachacookie(num):
         driver.add_cookie(cookie)
     urls =[]
     for i in xrange(num,500,1):
-        urls.append("http://qichacha.com/gongsi?prov=XJ&p=%s"%i)
+        urls.append("http://qichacha.com/gongsi?prov=SAX&p=%s"%i)
     for url in urls:
         driver.get(url)
         for j in xrange(1,len(driver.find_elements_by_xpath("(//a[@class='list-group-item clearfix'])"))+1,1):
@@ -211,7 +211,7 @@ def qichachacookie(num):
     session.close()
 
 if __name__ =='__main__':
-    num = 1
+    num = 300
     while 1:
         try:
             qichachacookie(num)

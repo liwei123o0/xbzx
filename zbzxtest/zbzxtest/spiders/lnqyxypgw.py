@@ -24,6 +24,7 @@ class Spiderlnqyxypgw(CrawlSpider):
              Rule(LinkExtractor(restrict_xpaths=("//td[@width='598']/a")),follow=False,callback='parse_item'),)
 
     def parse_item(self, response):
+
         item = Itemlnqyxypgw()
         sel = scrapy.Selector(response)
         item['name'] =  "".join(sel.xpath("//a[@class='a3']/text()").extract())
