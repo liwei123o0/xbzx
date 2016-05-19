@@ -10,7 +10,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column,VARCHAR,create_engine,TEXT,TIMESTAMP
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
-from  sqlalchemy.databases import mysql
 #设置入库时间
 from sqlalchemy.sql import func
 
