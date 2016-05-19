@@ -102,7 +102,7 @@ def gsqqxx_xj(num):
         try:
             driver.find_element_by_xpath("(//li[@class='tb-a1']/a)[%s]"%(k+1)).click()
             windows = driver.window_handles
-            driver.switch_to_window(windows[1])
+            driver.switch_to.window(windows[1])
             # for i in range(len(driver.find_elements_by_xpath("//div[@id='tabs']//li"))):
             driver.find_element_by_xpath("(//div[@id='tabs']//li)[1]").click()
             time.sleep(0.5)
@@ -133,7 +133,7 @@ def gsqqxx_xj(num):
             print jyfw
         except:
             driver.close()
-            driver.switch_to_window(windows[0])
+            driver.switch_to.window(windows[0])
             continue
         new_user = GsxxTable(name=name,xym=xym,gstype=gstype,cltime=cltime,
                                     fr=fr,zczb=zczb,djzt=djzt,yycs=yycs,yyqx=yyqx,
@@ -146,14 +146,14 @@ def gsqqxx_xj(num):
             session = DBsession()
 
         driver.close()
-        driver.switch_to_window(windows[0])
+        driver.switch_to.window(windows[0])
     driver.quit()
     session.close()
 
 if __name__ =='__main__':
 
     while 1:
-        for i in xrange(1,14526,1):
+        for i in xrange(5040,14526,1):
             try:
                 gsqqxx_xj(i)
             except:
