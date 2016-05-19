@@ -7,7 +7,7 @@ from  selenium import  webdriver
 import time
 import re
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column,VARCHAR,create_engine,TEXT,TIMESTAMP
+from sqlalchemy import Column,VARCHAR,create_engine,TIMESTAMP
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import IntegrityError
 #设置入库时间
@@ -15,7 +15,7 @@ from sqlalchemy.sql import func
 
 #数据库配置信息
 config = {
-    'tablename':'url_gsxx',
+    'tablename':'url_gsxx_sax',
     'sql':'mysql',
     'user':'root',
     'password':'root',
@@ -33,7 +33,7 @@ class UrlGsxxTable(Base):
     __tablename__=config['tablename']
     #url去重主键索引设置
     url = Column(VARCHAR(255),primary_key=True,index=True,unique=True)
-    type_name = Column(VARCHAR(255),index=True,unique=True)
+    type_name = Column(VARCHAR(255))
     #设置入库时间
     insert_time = Column(TIMESTAMP,server_default=func.now())
 
@@ -54,7 +54,7 @@ def dropAll(engine):
 def gsxx_urlDB(type_name):
 
 
-    for num in range(8600,14534,1):
+    for num in range(8,13641,1):
         #连接数据库
         engine = create_engine('%s://%s:%s@%s:%s/%s?charset=%s'
                        %(config['sql'],config['user'],config['password'],
@@ -65,14 +65,14 @@ def gsxx_urlDB(type_name):
         session = DBsession()
         #创建数据库
         createAll(engine)
-        url =  'http://gsxt.xjaic.gov.cn:7001/xxcx.do?method=ycmlIndex&random=%s&cxyzm=no&entnameold=&djjg=&maent.entname=&page.currentPageNo=%s&yzm='%(int(time.time()),num)
+        url =  'http://xygs.snaic.gov.cn/xxcx.do?method=ycmlIndex&random=%s&cxyzm=no&entnameold=&djjg=&maent.entname=&page.currentPageNo=%s&yzm='%(int(time.time()),num)
         html =  urllib2.urlopen(url).read()
         dom = etree.HTML(html)
         for i in range(len(dom.xpath("//li[@class='tb-a1']/a/@onclick"))):
 
             id =  "".join(dom.xpath("(//li[@class='tb-a1']/a/@onclick)[%s]"%(i+1)))
             id =  "".join(re.findall("\d+",id))
-            gsxx_url = "http://gsxt.xjaic.gov.cn:7001/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk1&from=&random="%id
+            gsxx_url = "http://xygs.snaic.gov.cn/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk1&from=&random="%id
             print gsxx_url
 
             new_user = UrlGsxxTable(url=gsxx_url,type_name=type_name,insert_time=func.now())
@@ -85,4 +85,4 @@ def gsxx_urlDB(type_name):
             session.close()
 if __name__ =='__main__':
 
-    gsxx_urlDB("新疆")
+    gsxx_urlDB("陕西")
