@@ -10,7 +10,7 @@ def OcrImg(inpath):
     print test
 
 if __name__ =='__main__':
-
+    import MySQLdb
     # import os
     # inpaths = os.listdir("E:\\xbzx\\yzm")
     # for inpath in inpaths:
@@ -18,4 +18,12 @@ if __name__ =='__main__':
     #
     #     print "%s:\n"%inpath
     #     OcrImg(inpath)
-    OcrImg("E:\\xbzx\\1.png")
+    # OcrImg("E:\\xbzx\\1.png")
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    cur  =conn.cursor()
+    cur.execute("SELECT url FROM test.url_gsxx")
+    urls = cur.fetchall()
+    for i in urls:
+        print type(str(i[0]))
+    cur.close()
+    conn.close()

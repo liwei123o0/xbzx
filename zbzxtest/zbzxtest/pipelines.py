@@ -298,3 +298,32 @@ class PipelineGsXJ(object):
     def close_spider(self,spider):
         self.cur.close()
         self.conn.close()
+
+class PipelineGsSAX(object):
+    def open_spider(self,spider):
+        self.cout = 0
+        self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+        self.cur  =self.conn.cursor()
+    def process_item(self, item, spider):
+        if spider.name=='shanxi':
+            print "##########shanxi%s###########"%self.cout
+            # print item
+            for k in item:
+                print "%s:%s"%(k,item[k])
+            try:
+                self.cur.execute(u"INSERT INTO spider.gsxx_sax_spider("
+                             "url,name,xym,gstype,fr,zczb,cltime,djzt,yycs,yyqx,yyqxz,yywf,djjg,hzrq) VALUES "
+                             "('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(
+                            item['url'],item['name'],item['xym'],item['gstype'],item['fr'],item['zczb'],item['cltime'],item['djzt'],item['yycs'],item['yyqx'],
+                            item['yyqxz'],item['yywf'],item['djjg'],item['hzrq']
+                            ))
+                # sql = str(u"INSERT INTO spider.gsxx_xj_spider(name,yywf) VALUES ('%s','%s')"%(item['name'],str(item['yywf'])))
+                # print sql
+                self.conn.commit()
+            except MySQLdb.Error,e :
+                print "##############mysql###################"
+                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            self.cout += 1
+    def close_spider(self,spider):
+        self.cur.close()
+        self.conn.close()

@@ -4,15 +4,21 @@ from scrapy import Spider,Request,Selector
 import time
 from zbzxtest.items import Item_Gsxx_XJ
 import re
+import MySQLdb
 class Gsxx_XJ(Spider):
-    name = 'xinjiang'
+    name = 'xinjiang01'
 
-    # start_urls=[]
+    start_urls=[]
 
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    cur  =conn.cursor()
+    cur.execute("SELECT url FROM test.url_gsxx")
+    urls = cur.fetchall()
+    for i in urls:
+        start_urls.append(str(i[0]))
     def start_requests(self):
-        for i in range(6542250000000000,6542250000999999,1):
-            yield Request("http://gsxt.xjaic.gov.cn:7001/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk11&random=%s"%(i,int(time.time())))
-
+        for url in self.start_urls:
+            yield Request("%s%s"%(url,int(time.time())))
     def parse(self, response):
         item =Item_Gsxx_XJ()
         sel = Selector(response)
@@ -73,8 +79,4 @@ class Gsxx_XJ(Spider):
             item['djzt'] = djzt.split("\t")[3]
         except:
             item['djzt'] = ""
-        # try:
-        #     item['bgxx'] = "".join(sel.xpath("//tr[@name='bg']//text()").extract())
-        # except:
-        #     item['bgxx'] = ""
         return item

@@ -2,19 +2,24 @@
 #! /usr/bin/env python
 from scrapy import Spider,Request,Selector
 import time
-from zbzxtest.items import Item_Gsxx_XJ
+from zbzxtest.items import Item_Gsxx_SAX
 import re
-class Gsxx_XJ(Spider):
-    name = 'xinjiang'
+import MySQLdb
+class Gsxx_SAX(Spider):
 
-    # start_urls=[]
+    name = 'shanxi'
+
+    start_urls=[]
+
+    for i in range(6100000000000001,6100000009999999,1):
+         start_urls.append("http://xygs.snaic.gov.cn/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk11&random="%i)
 
     def start_requests(self):
-        for i in range(6542250000000000,6542250000999999,1):
-            yield Request("http://gsxt.xjaic.gov.cn:7001/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk11&random=%s"%(i,int(time.time())))
+        for url in self.start_urls:
+            yield Request("".join(url+"%s"%int(time.time())))
 
     def parse(self, response):
-        item =Item_Gsxx_XJ()
+        item =Item_Gsxx_SAX()
         sel = Selector(response)
         djxx = "".join(sel.xpath("(//table[@class='detailsList'])[1]//tr[position()>1]//text()").extract())
         djxx = re.sub("\\xa0","",djxx)
@@ -73,8 +78,5 @@ class Gsxx_XJ(Spider):
             item['djzt'] = djzt.split("\t")[3]
         except:
             item['djzt'] = ""
-        # try:
-        #     item['bgxx'] = "".join(sel.xpath("//tr[@name='bg']//text()").extract())
-        # except:
-        #     item['bgxx'] = ""
+
         return item
