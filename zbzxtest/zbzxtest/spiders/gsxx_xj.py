@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 #! /usr/bin/env python
+
 from scrapy import Spider,Request,Selector
 import time
 from zbzxtest.items import Item_Gsxx_XJ
 import re
+
 class Gsxx_XJ(Spider):
+
     name = 'xinjiang'
-
     # start_urls=[]
-
     def start_requests(self):
         for i in range(6542250000000000,6542250000999999,1):
             yield Request("http://gsxt.xjaic.gov.cn:7001/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk11&random=%s"%(i,int(time.time())))
@@ -73,8 +74,4 @@ class Gsxx_XJ(Spider):
             item['djzt'] = djzt.split("\t")[3]
         except:
             item['djzt'] = ""
-        # try:
-        #     item['bgxx'] = "".join(sel.xpath("//tr[@name='bg']//text()").extract())
-        # except:
-        #     item['bgxx'] = ""
         return item
