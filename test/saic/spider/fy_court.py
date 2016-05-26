@@ -35,60 +35,82 @@ def Fyspider():
     #取iframe的id值做切换
     driver.switch_to.frame('contentFrame')
 
-    driver.find_element_by_xpath("(//a[@class='View'])[1]").click()
+    #做循环
+    for j in range(3577):
+        for i in range(9,len(driver.find_elements_by_xpath("//a[@class='View']"))):
+            driver.find_element_by_xpath("(//a[@class='View'])[%s]"%(i)).click()
 
-    time.sleep(3)
+            time.sleep(3)
 
-    png2 = driver.get_screenshot_as_png()
+            png2 = driver.get_screenshot_as_png()
 
-    with open("yzm2.png","wb")as w:
-        w.write(png2)
+            with open("yzm2.png","wb")as w:
+                w.write(png2)
 
-    im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm2.png")
+            im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm2.png")
 
-    box2 = (503,785,584,830)
+            box2 = (503,785,584,830)
+            # box2 = (503,660,584,695)
 
-    test = im.crop(box2)
+            test = im.crop(box2)
 
-    test.save("E:\\xbzx\\test\\saic\\spider\\yzm3.png",'png')
+            test.save("E:\\xbzx\\test\\saic\\spider\\yzm3.png",'png')
 
-    yzm2 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm3.png')
-    #切换回原窗口
-    driver.switch_to.default_content()
+            yzm2 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm3.png')
+            #切换回原窗口
+            driver.switch_to.default_content()
 
-    driver.find_element_by_xpath("//input[@id='j_captchad']").send_keys(yzm2)
+            driver.find_element_by_xpath("//input[@id='j_captchad']").send_keys(yzm2)
 
-    driver.find_element_by_xpath("(//div[@class='ui-dialog-buttonset']/button)[1]").click()
+            driver.find_element_by_xpath("(//div[@class='ui-dialog-buttonset']/button)[1]").click()
 
-    time.sleep(3)
+            time.sleep(3)
 
-    name = driver.find_element_by_xpath("//td[@id='pnameDetail']").text
-    xym = driver.find_element_by_xpath("//td[@id='partyCardNumDetail']").text
-    zxfy = driver.find_element_by_xpath("//td[@id='execCourtNameDetail']").text
-    latime = driver.find_element_by_xpath("//td[@id='caseCreateTimeDetail']").text
-    ah = driver.find_element_by_xpath("//td[@id='caseCodeDetail']").text
-    zxb = driver.find_element_by_xpath("//td[@id='execMoneyDetail']").text
+            name = driver.find_element_by_xpath("//td[@id='pnameDetail']").text
+            xym = driver.find_element_by_xpath("//td[@id='partyCardNumDetail']").text
+            zxfy = driver.find_element_by_xpath("//td[@id='execCourtNameDetail']").text
+            latime = driver.find_element_by_xpath("//td[@id='caseCreateTimeDetail']").text
+            ah = driver.find_element_by_xpath("//td[@id='caseCodeDetail']").text
+            zxb = driver.find_element_by_xpath("//td[@id='execMoneyDetail']").text
 
+            driver.find_element_by_xpath("//button[@id='CloseResultView']").click()
+
+            driver.switch_to.frame('contentFrame')
+            print name
+            print xym
+            print zxfy
+            print latime
+            print ah
+            print zxb
+
+        driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+2)).click()
+
+        time.sleep(3)
+
+        png2 = driver.get_screenshot_as_png()
+
+        with open("yzm4.png","wb")as w:
+            w.write(png2)
+
+        im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
+
+        box3 = (503,663,584,690)
+
+        test = im.crop(box3)
+
+        test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
+
+        yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
+        #切换回原窗口
+        driver.switch_to.default_content()
+
+        driver.find_element_by_xpath("//input[@id='j_captchad']").send_keys(yzm3)
+
+        driver.find_element_by_xpath("//div[@class='ui-dialog-buttonset']/button[1]").click()
+        time.sleep(3)
     driver.quit()
 
-    print name
-    print xym
-    print zxfy
-    print latime
-    print ah
-    print zxb
 
 if __name__ =='__main__':
     Fyspider()
-    # im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm2.png")
-    #
-    # box2 = (503,785,584,830)
-    #
-    # test = im.crop(box2)
-    #
-    # test.save("E:\\xbzx\\test\\saic\\spider\\yzm3.png",'png')
-    #
-    # yzm2 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm3.png')
-
-    # print yzm2
 
