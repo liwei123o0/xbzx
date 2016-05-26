@@ -11,7 +11,7 @@ class Gsxx_XJ(Spider):
     name = 'xinjiang'
     # start_urls=[]
     def start_requests(self):
-        for i in range(6542250000000000,6542250000999999,1):
+        for i in range(6542010000000000,6542010000999999,1):
             yield Request("http://gsxt.xjaic.gov.cn:7001/ztxy.do?method=qyInfo&maent.pripid=%s&czmk=czmk11&random=%s"%(i,int(time.time())))
 
     def parse(self, response):
@@ -25,7 +25,7 @@ class Gsxx_XJ(Spider):
         item['gstype'] =  "".join(sel.xpath("(//table[@class='detailsList'])[1]//tr[3]/td[1]/text()").extract())
         item['fr'] =  "".join(sel.xpath("(//table[@class='detailsList'])[1]//tr[3]/td[2]/text()").extract())
         try:
-            yycs =  "".join(re.findall(u"(?<=住所\r\n).*",djxx,re.DOTALL))
+            yycs =''.join(re.findall(u"(?<=住所\r\n).*",djxx,re.DOTALL))
             item['yycs'] = re.sub("\s+","",yycs.split("\r\n")[1])
         except:
             try:
@@ -48,7 +48,6 @@ class Gsxx_XJ(Spider):
             item['yyqx'] = re.sub("\s+","",yyqx.split("\r\n")[1])
         except:
             item['yyqx'] = ""
-
         try:
             yyqxz =  "".join(re.findall(u"(?<=营业期限至).*",djxx,re.DOTALL))
             item['yyqxz'] = re.sub("\s+","",yyqxz.split("\r\n")[1])
@@ -74,4 +73,5 @@ class Gsxx_XJ(Spider):
             item['djzt'] = djzt.split("\t")[3]
         except:
             item['djzt'] = ""
+
         return item

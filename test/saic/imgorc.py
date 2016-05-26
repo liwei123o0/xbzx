@@ -6,6 +6,8 @@ from PIL import  Image
 #输入图像路径
 def OcrImg(inpath):
     image = Image.open(inpath)
-    test = pytesseract.image_to_string(image,lang='chi_sim')
+    #中文识别
+    # test = pytesseract.image_to_string(image,lang='chi_sim')
+    test = pytesseract.image_to_string(image)
     print test
     return test
