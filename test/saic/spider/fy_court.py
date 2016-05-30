@@ -26,7 +26,7 @@ def Fyspider():
 
     yzm = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm1.png')
 
-    driver.find_element_by_xpath("//input[@id='pname']").send_keys(u"陕西")
+    driver.find_element_by_xpath("//input[@id='pname']").send_keys(u"西安市")
 
     driver.find_element_by_xpath("//input[@id='j_captcha']").send_keys(yzm)
 
@@ -36,9 +36,12 @@ def Fyspider():
     driver.switch_to.frame('contentFrame')
 
     #做循环
-    for j in range(3577):
-        for i in range(9,len(driver.find_elements_by_xpath("//a[@class='View']"))):
-            driver.find_element_by_xpath("(//a[@class='View'])[%s]"%(i)).click()
+    for j in range(1,3577,1):
+        #查询内容循环
+        for i in range(len(driver.find_elements_by_xpath("//a[@class='View']"))):
+
+            print len(driver.find_elements_by_xpath("//a[@class='View']"))
+            driver.find_element_by_xpath("(//a[@class='View'])[%s]"%(i+1 )).click()
 
             time.sleep(3)
 
@@ -66,7 +69,13 @@ def Fyspider():
 
             time.sleep(3)
 
+
+
             name = driver.find_element_by_xpath("//td[@id='pnameDetail']").text
+            if name == None:
+                print "###################"
+                print type(name)
+                continue
             xym = driver.find_element_by_xpath("//td[@id='partyCardNumDetail']").text
             zxfy = driver.find_element_by_xpath("//td[@id='execCourtNameDetail']").text
             latime = driver.find_element_by_xpath("//td[@id='caseCreateTimeDetail']").text
@@ -82,9 +91,12 @@ def Fyspider():
             print latime
             print ah
             print zxb
-
-        driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+2)).click()
-
+        #翻页验证码
+        print "######翻到第%s页#########"%(j+1)
+        if j ==1:
+            driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
+        elif j>1:
+            driver.find_element_by_xpath("//a[@onclick='gotoPage(3)']").click()
         time.sleep(3)
 
         png2 = driver.get_screenshot_as_png()
@@ -94,13 +106,15 @@ def Fyspider():
 
         im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
 
-        box3 = (503,663,584,690)
+        box3 = (503,798,580,821)
+        # box3 = (503,663,584,690)
 
         test = im.crop(box3)
 
         test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
 
         yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
+
         #切换回原窗口
         driver.switch_to.default_content()
 
@@ -108,9 +122,21 @@ def Fyspider():
 
         driver.find_element_by_xpath("//div[@class='ui-dialog-buttonset']/button[1]").click()
         time.sleep(3)
+        driver.switch_to.frame('contentFrame')
+
+
     driver.quit()
 
 
 if __name__ =='__main__':
     Fyspider()
 
+    # im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
+
+    # box3 = (503,798,580,821)
+
+    # test = im.crop(box3)
+
+    # test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
+
+    # yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')

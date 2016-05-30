@@ -13,4 +13,8 @@ def InsertSQL(*args,**kwargs):
     pass
 
 if __name__ =='__main__':
-    InsertSQL(name='liwei',age=24,sex='男')
+    # InsertSQL(name='liwei',age=24,sex='男')
+    for i in range(1,10,1):
+        for j in range(20,30,1):
+            print j
+        print i
