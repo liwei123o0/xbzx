@@ -91,39 +91,49 @@ def Fyspider():
             print latime
             print ah
             print zxb
-        #翻页验证码
-        print "######翻到第%s页#########"%(j+1)
-        if j ==1:
-            driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
-        elif j>1:
-            driver.find_element_by_xpath("//a[@onclick='gotoPage(3)']").click()
-        time.sleep(3)
+        while 1:
+            #翻页验证码
+            print "######翻到第%s页#########"%(j+1)
+            if j ==1:
+                driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
+            elif j>1:
+                driver.find_element_by_xpath("//a[@onclick='gotoPage(3)']").click()
+            time.sleep(3)
 
-        png2 = driver.get_screenshot_as_png()
+            png2 = driver.get_screenshot_as_png()
 
-        with open("yzm4.png","wb")as w:
-            w.write(png2)
+            with open("yzm4.png","wb")as w:
+                w.write(png2)
 
-        im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
+            im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
 
-        box3 = (503,798,580,821)
-        # box3 = (503,663,584,690)
+            box3 = (503,798,580,821)
+            # box3 = (503,663,584,690)
 
-        test = im.crop(box3)
+            test = im.crop(box3)
 
-        test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
+            test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
 
-        yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
+            yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
 
-        #切换回原窗口
-        driver.switch_to.default_content()
+            #切换回原窗口
+            driver.switch_to.default_content()
 
-        driver.find_element_by_xpath("//input[@id='j_captchad']").send_keys(yzm3)
+            driver.find_element_by_xpath("//input[@id='j_captchad']").send_keys(yzm3)
 
-        driver.find_element_by_xpath("//div[@class='ui-dialog-buttonset']/button[1]").click()
-        time.sleep(3)
-        driver.switch_to.frame('contentFrame')
+            driver.find_element_by_xpath("//div[@class='ui-dialog-buttonset']/button[1]").click()
 
+            time.sleep(3)
+
+            driver.switch_to.frame('contentFrame')
+
+            error = driver.find_element_by_xpath("//h4").text
+
+            if error ==u'验证码错误，请重新输入！返回首页':
+                driver.back()
+                continue
+            else:
+                break
 
     driver.quit()
 
