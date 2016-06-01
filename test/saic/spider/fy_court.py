@@ -5,8 +5,13 @@ from selenium import webdriver
 import time
 from test.saic import imgorc
 from PIL import Image
+import MySQLdb
+
 
 def Fyspider():
+
+    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    cur  =conn.cursor()
 
     driver = webdriver.Firefox()
     driver.get("http://zhixing.court.gov.cn/search/")
@@ -36,7 +41,7 @@ def Fyspider():
     driver.switch_to.frame('contentFrame')
 
     #做循环
-    for j in range(1,3577,1):
+    for j in range(1,683,1):
         #查询内容循环
         for i in range(len(driver.find_elements_by_xpath("//a[@class='View']"))):
 
@@ -91,13 +96,19 @@ def Fyspider():
             print latime
             print ah
             print zxb
+            try:
+                cur.execute("INSERT INTO spider.fy_sax_zx(name,xym,zxfy,latime,ah,zxb)" \
+                    " VALUES ('%s','%s','%s','%s','%s','%s')"%(name,xym,zxfy,latime,ah,zxb))
+                conn.commit()
+            except MySQLdb.Error,e:
+                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
         while 1:
             #翻页验证码
             print "######翻到第%s页#########"%(j+1)
-            if j ==1:
-                driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
-            elif j>1:
-                driver.find_element_by_xpath("//a[@onclick='gotoPage(3)']").click()
+            # if j ==1:
+            driver.find_element_by_xpath("//div[@id='ResultlistBlock']/div/a[last()-1]").click()
+            # elif j>1:
+            #     driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
             time.sleep(3)
 
             png2 = driver.get_screenshot_as_png()
@@ -116,6 +127,13 @@ def Fyspider():
 
             yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
 
+            try:
+                yzm3 = int(yzm3)
+            except:
+                driver.switch_to.default_content()
+                driver.find_element_by_xpath("//div[@class='ui-dialog-buttonset']/button[2]").click()
+                driver.switch_to.frame('contentFrame')
+                continue
             #切换回原窗口
             driver.switch_to.default_content()
 
@@ -134,19 +152,9 @@ def Fyspider():
                 continue
             else:
                 break
-
+    cur.close()
+    conn.close()
     driver.quit()
-
 
 if __name__ =='__main__':
     Fyspider()
-
-    # im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm4.png")
-
-    # box3 = (503,798,580,821)
-
-    # test = im.crop(box3)
-
-    # test.save("E:\\xbzx\\test\\saic\\spider\\yzm5.png",'png')
-
-    # yzm3 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm5.png')
