@@ -7,7 +7,6 @@ from test.saic import imgorc
 from PIL import Image
 import MySQLdb
 
-
 def Fyspider():
 
     conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
@@ -45,7 +44,6 @@ def Fyspider():
         #查询内容循环
         for i in range(len(driver.find_elements_by_xpath("//a[@class='View']"))):
 
-            print len(driver.find_elements_by_xpath("//a[@class='View']"))
             driver.find_element_by_xpath("(//a[@class='View'])[%s]"%(i+1 )).click()
 
             time.sleep(3)
@@ -74,12 +72,9 @@ def Fyspider():
 
             time.sleep(3)
 
-
-
             name = driver.find_element_by_xpath("//td[@id='pnameDetail']").text
             if name == None:
                 print "###################"
-                print type(name)
                 continue
             xym = driver.find_element_by_xpath("//td[@id='partyCardNumDetail']").text
             zxfy = driver.find_element_by_xpath("//td[@id='execCourtNameDetail']").text
@@ -105,9 +100,7 @@ def Fyspider():
         while 1:
             #翻页验证码
             print "######翻到第%s页#########"%(j+1)
-            # if j ==1:
             driver.find_element_by_xpath("//div[@id='ResultlistBlock']/div/a[last()-1]").click()
-            # elif j>1:
             #     driver.find_element_by_xpath("//a[@onclick='gotoPage(%s)']"%(j+1)).click()
             time.sleep(3)
 
