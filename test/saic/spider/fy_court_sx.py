@@ -30,7 +30,7 @@ def Fyspider():
 
     yzm = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm1.png')
 
-    driver.find_element_by_xpath("//input[@id='pname']").send_keys(u"西安市")
+    driver.find_element_by_xpath("//input[@id='pname']").send_keys(u"咸阳市")
 
     driver.find_element_by_xpath("//input[@id='j_captcha']").send_keys(yzm)
 
