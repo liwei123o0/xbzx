@@ -13,20 +13,21 @@ def InsertSQL(*args,**kwargs):
 
 if __name__ =='__main__':
     # InsertSQL(name='liwei',age=24,sex='男')
-    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
-    cur  =conn.cursor()
-    import re
-    with open('C:\Users\XBZX\Desktop\ztsj.txt','rb')as f:
-        keyword = f.readlines()
-    for key in keyword:
-        print key
-        keys =  re.split('\s+',key)
-        try:
-            cur.execute("INSERT INTO test.fy_sax(name,xym,fr)" \
-                    " VALUES ('%s','%s','%s')"%(keys[1],keys[2],keys[3]))
-            conn.commit()
-        except MySQLdb.Error,e:
-            print "Mysql Error %d: %s" % (e.args[0], e.args[1])
-
-    cur.close()
-    conn.close()
+    # conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    # cur  =conn.cursor()
+    # import re
+    # with open('C:\Users\XBZX\Desktop\ztsj.txt','rb')as f:
+    #     keyword = f.readlines()
+    # for key in keyword:
+    #     print key
+    #     keys =  re.split('\s+',key)
+    #     try:
+    #         cur.execute("INSERT INTO test.fy_sax(name,xym,fr)" \
+    #                 " VALUES ('%s','%s','%s')"%(keys[1],keys[2],keys[3]))
+    #         conn.commit()
+    #     except MySQLdb.Error,e:
+    #         print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+    #
+    # cur.close()
+    # conn.close()
+    pass
