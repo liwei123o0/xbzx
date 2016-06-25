@@ -11,6 +11,7 @@ def Fyspider():
 
     conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
+    # driver = webdriver.PhantomJS()
     driver = webdriver.Firefox()
 
     while 1:
@@ -112,16 +113,21 @@ def Fyspider():
         cur.close()
         conn.close()
         driver.quit()
+
     except:
         cur.execute("UPDATE test.fy_sax SET num=num+1,bool=bool-1 WHERE name='%s'"%keyword)
         conn.commit()
         cur.close()
         conn.close()
         driver.quit()
+
 if __name__ =='__main__':
+
     # Fyspider()
     num = 1
+
     while 1:
+
         # try:
         print '############%s#############'%num
         Fyspider()

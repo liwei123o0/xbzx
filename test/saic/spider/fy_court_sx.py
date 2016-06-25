@@ -36,6 +36,7 @@ def Fyspider():
 
     driver.find_element_by_xpath("//button[@id='button']").click()
     time.sleep(2)
+
     #取iframe的id值做切换
     driver.switch_to.frame('contentFrame')
 
@@ -151,5 +152,4 @@ def Fyspider():
     driver.quit()
 
 if __name__ =='__main__':
-
     Fyspider()
