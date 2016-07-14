@@ -73,7 +73,7 @@ HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
 ITEM_PIPELINES = {
    # 'zbzxtest.pipelines.ZbzxtestPipeline': 800,
    #  'zbzxtest.pipelines.JrttPipeline':301,
-   'zbzxtest.pipelines.PipelineGsXJ':321,
+   # 'zbzxtest.pipelines.PipelineGsXJ':321,
     # 'zbzxtest.pipelines.PipelineGsSAX':340,
    #  'zbzxtest.pipelines.Pipeline12312':802,
    #  'zbzxtest.pipelines.Pipelinebgcheck':303,
@@ -81,8 +81,8 @@ ITEM_PIPELINES = {
    #  'zbzxtest.pipelines.Pipelinelhratings':305,
    #   'zbzxtest.pipelines.Pipelinepyrating':306,
    #  'zbzxtest.pipelines.Pipelinelnqyxypgw':307,
-   #  'zbzxtest.pipelines.Pipeline51jobsx':800,
-   #   'zbzxtest.pipelines.Pipeline51jobsax':800,
+    'zbzxtest.pipelines.Pipeline51jobsx':800,
+     # 'zbzxtest.pipelines.Pipeline51jobsax':800,
     # 'zbzxtest.pipelines.ZbzxtestczPipeline': 309,
     # 'zbzxtest.pipelines.PipelineBcpcn':210,
 }

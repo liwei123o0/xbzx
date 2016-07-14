@@ -10,7 +10,10 @@ class Job51Spider(CrawlSpider):
     allowed_domains = ['51job.com']
     start_urls = []
     for i in range(1,1523):
-        url = "http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=200000&curr_page=%s"%i
+        #陕西
+        # url = "http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=200000&curr_page=%s"%i
+        #咸阳
+        url = "http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=200300%2C00&district=000000&funtype=0000&industrytype=00&issuedate=9&providesalary=99&keywordtype=2&curr_page={}&lang=c&stype=1&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&lonlat=0%2C0&radius=-1&ord_field=0&list_type=0&fromType=14&dibiaoid=0&confirmdate=9".format(i)
         start_urls.append(url)
 
     rules = (

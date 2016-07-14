@@ -9,11 +9,10 @@ import MySQLdb
 
 def Fyspider():
 
-    conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+    conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
     # driver = webdriver.PhantomJS()
     driver = webdriver.Firefox()
-
     while 1:
         cur.execute("SELECT name FROM test.fy_sax WHERE num=0 AND bool=0 LIMIT 1")
         keyword = cur.fetchall()[0][0]
@@ -73,7 +72,10 @@ def Fyspider():
             with open("yzm2.png","wb")as w:
                 w.write(png2)
             im = Image.open("E:\\xbzx\\test\\saic\\spider\\yzm2.png")
+            #小屏幕
             box2 = (503,785,584,830)
+            #大屏幕
+            # box2 = ()
             test = im.crop(box2)
             test.save("E:\\xbzx\\test\\saic\\spider\\yzm3.png",'png')
             yzm2 = imgorc.OcrImg('E:\\xbzx\\test\\saic\\spider\\yzm3.png')
