@@ -144,3 +144,13 @@ class Item_Gsxx_SAX(scrapy.Item):
     djjg = scrapy.Field()
     hzrq = scrapy.Field()
     djzt = scrapy.Field()
+
+class Item_Ccgp(scrapy.Item):
+    XB_URL = scrapy.Field()
+    XB_TITLE = scrapy.Field()
+    XB_CONTENT = scrapy.Field()
+    XB_PUBTIME = scrapy.Field()
+    XB_TYPE = scrapy.Field()
+    XB_GROUPNAME = scrapy.Field()
+    XB_REGION = scrapy.Field()
+    XB_SITENAME = scrapy.Field()

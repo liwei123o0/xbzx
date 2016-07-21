@@ -330,3 +330,31 @@ class Pipeline51jobsx(object):
 #     def close_spider(self,spider):
 #         self.cur.close()
 #         self.conn.close()
+
+class PipelineCcgp(object):
+    def open_spider(self,spider):
+        self.cout = 0
+        # self.conn = MySQLdb.connect(host="192.168.10.21",port=3306,user="root",passwd="root",charset="utf8")
+        #本地
+        self.conn = MySQLdb.connect(host="127.0.0.1",port=3306,user="root",passwd="root",charset="utf8")
+        self.cur  =self.conn.cursor()
+    def process_item(self, item, spider):
+        if spider.name=='ccgp':
+            print "##########ccgp%s###########"%self.cout
+            for k in item:
+                print "%s:%s"%(k,item[k])
+            try:
+                # self.cur.execute(u"INSERT INTO spider.job51sx ("
+                self.cur.execute(u"INSERT INTO xbzx.zhaobiao("
+                                 "XB_URL,XB_TITLE,XB_CONTENT,XB_PUBTIME,XB_TYPE,XB_GROUPNAME,XB_REGION,XB_SITENAME) VALUES "
+                                 "('%s','%s','%s','%s','%s','%s','%s','%s')"%(
+                                item['XB_URL'],item['XB_TITLE'],item['XB_CONTENT'],item['XB_PUBTIME'],item['XB_TYPE'],item['XB_GROUPNAME'],
+                                item['XB_REGION'],item['XB_SITENAME']
+                                ))
+                self.conn.commit()
+            except MySQLdb.Error,e :
+                print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+            self.cout += 1
+    def close_spider(self,spider):
+        self.cur.close()
+        self.conn.close()
