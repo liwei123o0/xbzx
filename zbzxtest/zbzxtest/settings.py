@@ -21,9 +21,9 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firef
 # LOG_ENABLED = False
 LOG_LEVEL = 'INFO'
 
-SPLASH_URL = 'http://192.168.48.130:8050'
+# SPLASH_URL = 'http://192.168.48.130:8050'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS=2
+# CONCURRENT_REQUESTS=2
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
@@ -56,12 +56,12 @@ CONCURRENT_REQUESTS=2
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
+# DOWNLOADER_MIDDLEWARES = {
    # 'zbzxtest.middlewares.MyCustomDownloaderMiddleware': 543,
-   'scrapyjs.SplashMiddleware':725
-}
-DUPEFILTER_CLASS = 'scrapyjs.SplashAwareDupeFilter'
-HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
+   # 'scrapyjs.SplashMiddleware':725
+# }
+# DUPEFILTER_CLASS = 'scrapyjs.SplashAwareDupeFilter'
+# HTTPCACHE_STORAGE = 'scrapyjs.SplashAwareFSCacheStorage'
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
 #EXTENSIONS = {

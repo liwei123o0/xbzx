@@ -342,7 +342,10 @@ class PipelineCcgp(object):
         if spider.name=='ccgp':
             print "##########ccgp%s###########"%self.cout
             for k in item:
-                print "%s:%s"%(k,item[k])
+                try:
+                    print "%s:%s"%(k,item[k])
+                except:
+                    pass
             try:
                 # self.cur.execute(u"INSERT INTO spider.job51sx ("
                 self.cur.execute(u"INSERT INTO xbzx.zhaobiao("

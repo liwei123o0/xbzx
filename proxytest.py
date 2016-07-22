@@ -43,4 +43,4 @@ if __name__ == '__main__':
     # for proxy in proxes:
     #     http,prot = proxy.split(":")
     #     ProxyFirefox(http,int(prot))
-    ProxyFirefox('124.193.33.233',3128)
+    ProxyFirefox('183.49.111.195',808)

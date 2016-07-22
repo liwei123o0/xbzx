@@ -15,16 +15,13 @@ class ccgpSpider(CrawlSpider):
     name = 'ccgp'
 
     start_urls = []
-
     for i in xrange(1,105,1):
-        start_urls.append('http://search.ccgp.gov.cn/dataB.jsp?searchtype=2&page_index={}&bidSort=0&buyerName=&projectId=&pinMu=0&bidType=7&dbselect=bidx&kw=&start_time=2016%3A04%3A19&end_time=2016%3A07%3A20&timeType=4&displayZone=%E9%99%95%E8%A5%BF%E7%9C%81&zoneId=61%25&pppStatus=&agentName='.format(i))
+        start_urls.append('http://search.ccgp.gov.cn/dataB.jsp?searchtype=2&page_index={}&bidSort=0&buyerName=&projectId=&pinMu=0&bidType=7&dbselect=bidx&kw=&start_time=2016%3A04%3A19&end_time=2016%3A07%3A20&timeType=4&displayZone=河北省&zoneId=61%25&pppStatus=&agentName='.format(i))
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths=("//ul[@class='vT-srch-result-list-bid']/li/a")),
              follow=False,callback="parse_item"),
     )
-
-
     def parse_item(self, response):
 
         item =Item_Ccgp()
